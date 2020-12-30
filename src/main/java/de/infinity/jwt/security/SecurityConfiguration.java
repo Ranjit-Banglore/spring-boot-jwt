@@ -1,13 +1,18 @@
 package de.infinity.jwt.security;
 
+import de.infinity.jwt.security.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /** This configuration creates a Servlet Filter known as the springSecurityFilterChain.
  * -Spring security handles authentication using authentication manager.
@@ -27,6 +32,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JpaUserDetailsService userDetailsService;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -36,21 +44,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.headers().disable(); // disable the cache
+        http.csrf().disable()
+                .authorizeRequests().antMatchers("/token").permitAll()
+                .anyRequest().authenticated()
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        //http.csrf().disable(); // cross site request frogery
-
-        http.authorizeRequests().antMatchers("/api/**").hasRole("USER")
-                .and()
-                //.authorizeRequests().antMatchers("/api/**").hasRole("USER")
-                .authorizeRequests().antMatchers("/admin").hasRole("ADMIN")
-                .and()
-                .authorizeRequests().anyRequest().permitAll()
-                .and()
-                .httpBasic();
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     private PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
