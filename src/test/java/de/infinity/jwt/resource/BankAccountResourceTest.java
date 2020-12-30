@@ -6,12 +6,15 @@ import de.infinity.jwt.dto.IbanDto;
 import de.infinity.jwt.dto.TransferDto;
 import de.infinity.jwt.enumeration.AccountType;
 import de.infinity.jwt.security.JpaUserDetailsService;
+import de.infinity.jwt.security.filter.JwtRequestFilter;
 import de.infinity.jwt.service.BankAccountService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.infinity.jwt.util.JwtUtil;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,13 +39,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BankAccountResourceTest {
 
     @Autowired
-    MockMvc mockMvc;
+   private MockMvc mockMvc;
 
     @MockBean
     private BankAccountService bankAccountService;
 
     @MockBean
     private JpaUserDetailsService jpaUserDetailsService;
+
+    @MockBean
+    private JwtUtil jwtUtil;
+
+    @InjectMocks
+    private JwtRequestFilter jwtRequestFilter;
 
     @Test
     public void verifyThatBankAccountByCustomerIdIsInvoked() throws Exception {
