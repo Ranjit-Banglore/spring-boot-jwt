@@ -1,4 +1,4 @@
-package de.infinity.jwt.api;
+package de.infinity.jwt.resource;
 
 import de.infinity.jwt.dto.CreateAccountDto;
 import de.infinity.jwt.dto.DepositRequestDto;
@@ -31,9 +31,9 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = BankAccountController.class)
+@WebMvcTest(controllers = BankAccountResource.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class BankAccountControllerTest {
+public class BankAccountResourceTest {
 
     @Autowired
     MockMvc mockMvc;

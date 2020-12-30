@@ -1,4 +1,4 @@
-package de.infinity.jwt.api;
+package de.infinity.jwt.resource;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

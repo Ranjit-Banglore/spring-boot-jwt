@@ -1,4 +1,4 @@
-package de.infinity.jwt.api;
+package de.infinity.jwt.resource;
 
 import de.infinity.jwt.dto.CreateAccountDto;
 import de.infinity.jwt.dto.DepositRequestDto;
@@ -21,7 +21,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/api")
-public class BankAccountController {
+public class BankAccountResource {
 
     @Autowired
     private BankAccountService bankAccountService;
