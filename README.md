@@ -72,6 +72,9 @@
 ## create a basic auth user. 
 ```BcryptTest.java is provided in project to generate encrypted password for a user```
 
+## Generate jwt token :
+```<path-to-context>/bank/token```
+
 ## APIs path : 
 ```<path-to-context>/bank/api/*```
 
