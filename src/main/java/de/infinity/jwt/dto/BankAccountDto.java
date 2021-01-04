@@ -61,4 +61,6 @@ public class BankAccountDto extends RepresentationModel<BankAccountDto> {
         this.balance = balance;
         this.active = active;
     }
+
+    public BankAccountDto(){}
 }

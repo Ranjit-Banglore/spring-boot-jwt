@@ -1,7 +1,7 @@
 package de.infinity.jwt.resource;
 
 import de.infinity.jwt.dto.AuthenticationRequest;
-import de.infinity.jwt.dto.AuthenticationResponse;
+import de.infinity.jwt.dto.JwtTokenResponse;
 import de.infinity.jwt.security.JpaUserDetailsService;
 import de.infinity.jwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class TokenResource {
         final UserDetails userDetails = jpaUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return ResponseEntity.ok(new JwtTokenResponse(jwt));
 
     }
 }

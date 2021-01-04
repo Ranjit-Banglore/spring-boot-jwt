@@ -1,12 +1,12 @@
 package de.infinity.jwt.dto;
 
-public class AuthenticationResponse {
+public class JwtTokenResponse {
     private String jwt;
 
-    public AuthenticationResponse() {
+    public JwtTokenResponse() {
     }
 
-    public AuthenticationResponse(String jwt) {
+    public JwtTokenResponse(String jwt) {
         this.jwt = jwt;
     }
 
